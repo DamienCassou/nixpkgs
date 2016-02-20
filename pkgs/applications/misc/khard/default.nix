@@ -14,9 +14,6 @@ pythonPackages.buildPythonPackage rec {
     configobj
     vobject
     argparse
-  ];
-
-  buildInputs = with pythonPackages; [
     pkgs.vdirsyncer
     pyyaml
   ];
