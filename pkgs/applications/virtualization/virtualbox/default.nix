@@ -1,5 +1,5 @@
 { stdenv, fetchurl, lib, iasl, dev86, pam, libxslt, libxml2, libX11, xproto, libXext
-, libXcursor, libXmu, qt4, libIDL, SDL, libcap, zlib, libpng, glib, kernel, lvm2
+, libXcursor, libXmu, qt5, libIDL, SDL, libcap, zlib, libpng, glib, kernel, lvm2, xorg, mesa
 , libXrandr
 , which, alsaLib, curl, libvpx, gawk, nettools, dbus
 , xorriso, makeself, perl, pkgconfig, nukeReferences
@@ -20,7 +20,7 @@ let
   # revision/hash as well. See
   # http://download.virtualbox.org/virtualbox/${version}/SHA256SUMS
   # for hashes.
-  version = "5.0.26";
+  version = "5.1.4";
 
   forEachModule = action: ''
     for mod in \
@@ -41,12 +41,12 @@ let
   '';
 
   # See https://github.com/NixOS/nixpkgs/issues/672 for details
-  extpackRevision = "108824";
+  extpackRevision = "110228";
   extensionPack = requireFile rec {
     name = "Oracle_VM_VirtualBox_Extension_Pack-${version}-${extpackRevision}.vbox-extpack";
     # IMPORTANT: Hash must be base16 encoded because it's used as an input to
     # VBoxExtPackHelperApp!
-    sha256 = "2f2302c7ba3d00a1258fe8e7767a6eb08dccdc3c31f6e3eeb74063c2c268b104";
+    sha256 = "9462ff1b567c37ad9a33c0c7ca1925776615ec89b5a72563f29a8cc8514cf316";
     message = ''
       In order to use the extension pack, you need to comply with the VirtualBox Personal Use
       and Evaluation License (PUEL) available at:
@@ -65,12 +65,12 @@ in stdenv.mkDerivation {
 
   src = fetchurl {
     url = "http://download.virtualbox.org/virtualbox/${version}/VirtualBox-${version}.tar.bz2";
-    sha256 = "78dec1369d2c8feefea3c682d95e76c0e99414c56626388035cf4061d4dad62e";
+    sha256 = "b9a14a7771059c55c44b97f8d4eef9bea84544f3e215e0caa563bc35e2f16aaf";
   };
 
   buildInputs =
-    [ iasl dev86 libxslt libxml2 xproto libX11 libXext libXcursor libIDL
-      libcap glib lvm2 python alsaLib curl libvpx pam xorriso makeself perl
+    [ iasl dev86 libxslt libxml2 xproto libX11 libXext libXcursor qt5.qtbase libIDL
+      libcap glib lvm2 python alsaLib curl libvpx pam xorriso makeself perl xorg.libXinerama mesa
       pkgconfig which libXmu nukeReferences ]
     ++ optional javaBindings jdk
     ++ optional pythonBindings python
@@ -107,7 +107,7 @@ in stdenv.mkDerivation {
 
   postPatch = ''
     sed -i -e 's|/sbin/ifconfig|${nettools}/bin/ifconfig|' \
-      src/apps/adpctl/VBoxNetAdpCtl.cpp
+      src/VBox/HostDrivers/adpctl/VBoxNetAdpCtl.cpp
   '';
 
   # first line: ugly hack, and it isn't yet clear why it's a problem
@@ -135,7 +135,7 @@ in stdenv.mkDerivation {
 
     ./configure \
       ${optionalString headless "--build-headless"} \
-      ${optionalString (!headless) "--with-qt4-dir=${qt4}"} \
+      ${optionalString (!headless) "--with-qt-dir=${qt5.qtbase}"} \
       ${optionalString (!javaBindings) "--disable-java"} \
       ${optionalString (!pythonBindings) "--disable-python"} \
       ${optionalString (!pulseSupport) "--disable-pulse"} \
