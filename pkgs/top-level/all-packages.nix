@@ -12746,7 +12746,7 @@ in
 
   elvis = callPackage ../applications/editors/elvis { };
 
-  emacs = self.emacs24;
+  emacs = self.emacs25;
   emacsPackages = self.emacs24Packages;
   emacsPackagesNg = self.emacs24PackagesNg;
   emacsMelpa = self.emacs24PackagesNg; # for backward compatibility
@@ -12776,7 +12776,7 @@ in
   });
   emacs24Macport = self.emacs24Macport_24_5;
 
-  emacs25pre = lowPrio (callPackage ../applications/editors/emacs-25 {
+  emacs25 = callPackage ../applications/editors/emacs-25 {
     # use override to enable additional features
     libXaw = xorg.libXaw;
     Xaw3d = null;
@@ -12786,7 +12786,7 @@ in
     acl = null;
     gpm = null;
     inherit (darwin.apple_sdk.frameworks) AppKit CoreWLAN GSS Kerberos ImageIO;
-  });
+  };
 
   emacsPackagesGen = emacs: self: let callPackage = newScope self; in rec {
     inherit emacs;
