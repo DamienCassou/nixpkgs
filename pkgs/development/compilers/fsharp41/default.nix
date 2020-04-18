@@ -4,11 +4,11 @@
 
 stdenv.mkDerivation rec {
   pname = "fsharp";
-  version = "4.1.34";
+  version = "4.5.0";
 
   src = fetchurl {
     url = "https://github.com/fsharp/fsharp/archive/${version}.tar.gz";
-    sha256 = "0cv6p5pin962vhbpsji40nkckkag5c96kq5qihvg60pc1z821p0i";
+    sha256 = "05lgn3qzkwq411r84w5lwfy9xsizy8blqm4y7ynzqixc9fyj9gki";
   };
 
   nativeBuildInputs = [ pkgconfig ];
@@ -39,13 +39,9 @@ stdenv.mkDerivation rec {
   # https://github.com/mono/mono/issues/7805
   patches = [
     ./fsharp-IsPathRooted-type-inference.patch
-    ./fsharp-string-switchName.patch
-    ./fsharp-path-overloads.patch
   ];
 
   configurePhase = ''
-    substituteInPlace ./autogen.sh --replace "/usr/bin/env sh" "${stdenv.shell}"
-    ./autogen.sh --prefix $out
   '';
 
   preBuild = ''
