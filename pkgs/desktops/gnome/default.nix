@@ -221,6 +221,8 @@ lib.makeScope pkgs.newScope (self: with self; {
 
   gnome-klotski = callPackage ./games/gnome-klotski { };
 
+  gnome-games = callPackage ./games/gnome-games { };
+
   gnome-mahjongg = callPackage ./games/gnome-mahjongg { };
 
   gnome-mines = callPackage ./games/gnome-mines { };
