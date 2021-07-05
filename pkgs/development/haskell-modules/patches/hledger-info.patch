@@ -1,0 +1,11 @@
+--- a/embeddedfiles/hledger.info	1970-01-01 01:00:01.000000000 +0100
++++ b/embeddedfiles/hledger.info	2021-07-04 12:57:09.220493292 +0200
+@@ -2,7 +2,7 @@
+ 
+ INFO-DIR-SECTION User Applications
+ START-INFO-DIR-ENTRY
+-* hledger: (hledger/hledger).  Command-line plain text accounting tool.
++* hledger: (hledger).  Command-line plain text accounting tool.
+ END-INFO-DIR-ENTRY
+ 
+ 
