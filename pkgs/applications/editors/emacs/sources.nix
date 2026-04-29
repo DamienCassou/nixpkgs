@@ -118,10 +118,6 @@ in
         url = "https://cgit.git.savannah.gnu.org/cgit/emacs.git/patch/?id=8f535370b9efbc91673b20c6987a5cae4f6dc562";
         hash = "sha256-ny44eIi8DUa9pQhVGzhGz4H6FXU4+ki86SITLXhkwpw=";
       })
-      (builtins.path {
-        name = "inhibit-lexical-cookie-warning-67916.patch";
-        path = ./inhibit-lexical-cookie-warning-67916-30.patch;
-      })
     ];
   });
 
